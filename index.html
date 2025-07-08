@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rs Motos - Concesionaria</title>
+  <style>
+    :root {
+      --amarillo: #ffd500;
+      --oscuro: #111;
+      --claro: #fff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: var(--claro); color: var(--oscuro); }
+    header {
+      background-color: var(--amarillo);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header img { height: 50px; }
+    .menu-toggle {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+    nav { display: flex; gap: 20px; }
+    nav a {
+      text-decoration: none;
+      color: var(--oscuro);
+      font-weight: bold;
+    }
+
+    /* Slider */
+    .slider {
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .slides {
+      display: flex;
+      width: 600%;
+      height: 100%;
+      animation: slide 18s infinite;
+    }
+    .slides img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @keyframes slide {
+      0% { margin-left: 0; }
+      16.66% { margin-left: 0; }
+      33.33% { margin-left: -100%; }
+      50% { margin-left: -200%; }
+      66.66% { margin-left: -300%; }
+      83.33% { margin-left: -400%; }
+      100% { margin-left: -500%; }
+    }
+
+    /* Botón Simulador */
+    .boton-credito {
+      display: block;
+      width: 100%;
+      background: var(--amarillo);
+      color: var(--oscuro);
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .popup-content {
+      background: var(--claro);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+    .popup input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .popup button {
+      padding: 10px 20px;
+      background: var(--amarillo);
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close-btn {
+      margin-top: 15px;
+      background: #999;
+      color: white;
+    }
+
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo_rs.jpg" alt="Logo">
+    <div class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('open')">☰</div>
+    <nav>
+      <a href="#slider">Inicio</a>
+      <a href="#marcas">Marcas</a>
+    </nav>
+  </header>
+
+  <section class="slider" id="slider">
+    <div class="slides">
+      <img src="slider/06.48.34.jpeg" alt="slide1">
+      <img src="slider/06.48.35.jpeg" alt="slide2">
+      <img src="slider/06.48.35 (1).jpeg" alt="slide3">
+      <img src="slider/06.48.36.jpeg" alt="slide4">
+      <img src="slider/06.48.36 (1).jpeg" alt="slide5">
+      <img src="slider/06.48.36 (2).jpeg" alt="slide6">
+    </div>
+  </section>
+
+  <button class="boton-credito" onclick="document.getElementById('popup').style.display='flex'">SIMULÁ TU CRÉDITO</button>
+
+  <section id="marcas" class="section" style="padding: 40px 20px;">
+    <h2 style="margin-bottom: 15px;">Marcas</h2>
+    <ul style="list-style: none; padding-left: 0;">
+      <li>Gilera</li>
+      <li>Zanella</li>
+      <li>Mondial</li>
+      <li>Motomel</li>
+      <li>Corven</li>
+      <li>Bajaj</li>
+    </ul>
+  </section>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h3>Ingresá tu DNI</h3>
+      <input type="text" id="dni" placeholder="Ej: 12345678" />
+      <br>
+      <button onclick="simularCredito()">Verificar</button>
+      <div id="resultado" style="margin-top: 20px;"></div>
+      <button class="close-btn" onclick="document.getElementById('popup').style.display='none'">Cerrar</button>
+    </div>
+  </div>
+
+  <a href="https://wa.me/5491170801421" class="whatsapp">📲 WhatsApp</a>
+
+  <script>
+    function simularCredito() {
+      const dni = document.getElementById('dni').value.trim();
+      const resultado = document.getElementById('resultado');
+      if (!dni) {
+        resultado.innerText = 'Por favor ingresá tu DNI.';
+        return;
+      }
+      resultado.innerText = '🔍 Verificando posibilidad de financiación...';
+      setTimeout(() => {
+        resultado.innerHTML = `🎉 ¡Felicidades!<br>Tenés un crédito disponible para la compra de tu moto 0km.<br><strong>Contactate con nosotros para recibir la mejor cotización.</strong><br><br><a href='https://wa.me/5491170801421' target='_blank' style='background: #25D366; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;'>Hablar por WhatsApp</a>`;
+      }, 7000);
+    }
+  </script>
+</body>
+</html>
